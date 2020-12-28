@@ -44,17 +44,24 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use('/api', route);
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.get('*', (req, res) => {
-res.sendFile(path.join(__dirname, 'public/index.html'));
-});
 
-const PORT = process.env.PORT || 7070;
+
+
+const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res)=> {
     res.send('Default Rate');
     });
     
+
+    // step 3
+    if(process.env.NODE_ENV === 'production') {
+      app.use(express.static(path.join(__dirname, 'public')));
+      app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public/index.html'));
+        // res.sendFile(path.join(__dirname, 'public',  'index.html'));
+        });
+    }
 
 app.listen(PORT, ()=> {
     console.log('server has been started at port'+ PORT);
