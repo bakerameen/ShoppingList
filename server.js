@@ -12,7 +12,7 @@ const route = require('./route/routes');
 // connect to mongodb
 // mongoose.connect('mongodb://localhost:27017/shoppinglist');
 
-const dbPath = "mongodb+srv://baqer:iggy5R1y8urUhxts@cluster0-2wlh3.mongodb.net/test-Naseej-letter-competetion?retryWrites=true&w=majority";
+const dbPath = "mongodb+srv://baqer:iggy5R1y8urUhxts@cluster0-2wlh3.mongodb.net/main-Naseej-letter-competetion?retryWrites=true&w=majority";
 mongoose
   .connect(dbPath, {
     useUnifiedTopology: true,
@@ -27,16 +27,6 @@ mongoose
 
 
 
-// on connect
-// mongoose.connection.on('connected', ()=> {
-//     console.log('mongoose connected at port 27017');
-// });
-
-// // on not connect
-// mongoose.connection.on('error', (err)=> {
-// console.log(err);
-// });
-
 
 // middlewear
 
@@ -49,13 +39,14 @@ app.use('/api', route);
 
 const PORT = process.env.PORT || 8080;
 
+// Remove in Production
 // app.get('/', (req, res)=> {
 //     res.send('Default Rate');
 //     });
     
     
 
-    // step 3
+    // production 
     if(process.env.NODE_ENV === 'production') {
       app.use(express.static(path.join(__dirname, 'public')));
       app.get('*', (req, res) => {
@@ -63,6 +54,9 @@ const PORT = process.env.PORT || 8080;
          res.sendFile(path.join(__dirname, 'public',  'index.html'));
         });
     }
+
+    
+
 
 app.listen(PORT, ()=> {
     console.log('server has been started at port'+ PORT);
